@@ -8,7 +8,7 @@ const { auth } = require("../middleware/auth");
 //             Chat
 //=================================
 
-router.get("/getChats", auth, async (req, res) => {
+router.get("/getChats", async (req, res) => {
   await Chat.find()
   .populate("sender")
   .exec((err, chats) => {
