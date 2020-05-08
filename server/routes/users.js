@@ -9,13 +9,9 @@ const jwt = require('jsonwebtoken');
 //             User
 //=================================
 
-router.get("/auth", async (req, res) => {
-    const {
-        id,
-      } = req.body;
-    const user = User.findOne({
-        id,
-     });
+router.get("/auth", auth , async (req, res) => {
+  console.log(req.user, req.isAuthorized);
+    const user = await User.findById(req.user.id);
     res.status(200).json({
         _id: user._id,
         isAdmin: user.role === 0 ? false : true,
@@ -99,6 +95,7 @@ router.post("/login", async (req, res) => {
     
         res.status(200).json({
             userId: user.id,
+            userData: user,
             token,
             loginSuccess: true,
         });
